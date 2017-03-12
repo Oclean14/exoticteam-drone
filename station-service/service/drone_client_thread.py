@@ -8,6 +8,7 @@ import struct
 class DroneClientThread(threading.Thread):
     """ Cette classe représente une connection cliente. Pour chaque client, un nouveau thread est démarré """
     def __init__(self, thisServer, ip, port, clientsocket):
+        threading.Thread.__init__(self)
         self.ip = ip
         self.port = port
         self.clientsocket = clientsocket
@@ -16,10 +17,10 @@ class DroneClientThread(threading.Thread):
     def run(self):
         self.connected = True
         while self.connected:
-            r = self.clientsocket.recv
-            cmdId = struct.unpack("B", r);
+            r = self.clientsocket.recv(4096)
+            cmdId = r[0]
+            print("command id received ", cmdId)
             """Received bytes"""
-            print("Received bytes ", r , " cmd id ", cmdId)
             self.thisServer.cmds[cmdId].onReceive(r, self.clientsocket)
 
         print("Client disconnected")

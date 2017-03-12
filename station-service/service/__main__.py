@@ -2,6 +2,7 @@ import sys
 from drone_server import DroneServer
 from messages.commands_def import Commands
 from messages.nearest_station_cmd import NearestStationCmd
+from messages.drone_status_cmd import DroneStatusCmd
 
 def main(args=None):
     """The main routine."""
@@ -12,7 +13,8 @@ def main(args=None):
 
     """ Add commands here """
     """NEAREST STATION COMMAND"""
-    server.addCmd(Commands.NEAREST_STATION, NearestStationCmd())
+    server.addCmd(Commands.NEAREST_STATION.value, NearestStationCmd(server))
+    server.addCmd(Commands.DRONE_STATUS.value, DroneStatusCmd(server))
 
     """Run the server"""
     server.run()
