@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import sys
 from drone_server import DroneServer
 from messages.commands_def import Commands
@@ -11,12 +14,11 @@ def main(args=None):
 
     server = DroneServer("127.0.0.1", 8000)
 
-    """ Add commands here """
-    """NEAREST STATION COMMAND"""
+    """ Ajout des commandes ici """
     server.addCmd(Commands.NEAREST_STATION.value, NearestStationCmd(server))
     server.addCmd(Commands.DRONE_STATUS.value, DroneStatusCmd(server))
 
-    """Run the server"""
+    """ Démarrage du serveur """
     server.run()
 
 if __name__ == "__main__":
